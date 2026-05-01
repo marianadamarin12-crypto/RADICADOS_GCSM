@@ -2,105 +2,267 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Gerencia Corporativa Sistema Maestro — GCSM 2024–2026</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GCSM - Acueducto Bogotá</title>
 
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
 <style>
-:root {
-  --bg:#F7F8FC;--surface:#FFFFFF;--border:#E4E7EF;
-  --navy:#1A2E6C;--navy-mid:#2547A8;--blue-lt:#EBF0FF;
-  --text:#111827;--text2:#4B5563;--text3:#9CA3AF;
-  --mono:'DM Mono',monospace;--sans:'DM Sans',sans-serif;--radius:10px;
+:root{
+    --azul:#0d2d73;
+    --azul2:#1b4cb8;
+    --blanco:#ffffff;
+    --gris:#f5f7fb;
 }
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{font-family:var(--sans);background:var(--bg);color:var(--text);font-size:14px;line-height:1.6}
-.topbar{position:sticky;top:0;z-index:100;background:var(--navy);padding:0 2rem;display:flex;align-items:center;gap:1rem;height:52px;box-shadow:0 2px 12px rgba(26,46,108,.25)}
-.topbar-title{font-size:13px;font-weight:600;color:#fff;letter-spacing:.02em;white-space:nowrap}
-.topbar-sep{width:1px;height:20px;background:rgba(255,255,255,.2);flex-shrink:0}
-.topbar-links{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;flex:1}
-.topbar-links::-webkit-scrollbar{display:none}
-.topbar-link{display:inline-flex;align-items:center;gap:6px;padding:5px 11px;border-radius:6px;font-size:12px;font-weight:500;color:rgba(255,255,255,.75);text-decoration:none;white-space:nowrap;transition:background .15s,color .15s;cursor:pointer}
-.topbar-link:hover,.topbar-link.active{background:rgba(255,255,255,.15);color:#fff}
-.topbar-link .dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
-.hero{padding:3rem 2rem 2.5rem;text-align:center;position:relative}
-.hero-eyebrow{display:inline-block;margin-bottom:.6rem;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.85);font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:4px 14px;border-radius:20px}
-.hero h1{font-size:clamp(1.5rem,4vw,2.2rem);font-weight:600;color:#fff;margin-bottom:.4rem;line-height:1.2}
-.hero-sub{font-size:13px;color:rgba(255,255,255,.65);margin-bottom:1.8rem}
-.hero-kpis{display:flex;justify-content:center;gap:1px;max-width:400px;margin:0 auto;background:rgba(255,255,255,.1);border-radius:var(--radius);overflow:hidden}
-.kpi{flex:1;padding:.9rem .75rem;background:rgba(255,255,255,.06);text-align:center}
-.kpi-val{font-size:1.6rem;font-weight:600;color:#fff;line-height:1}
-.kpi-lbl{font-size:10px;color:rgba(255,255,255,.55);text-transform:uppercase;letter-spacing:.06em;margin-top:3px}
-.home-link{display:inline-flex;align-items:center;gap:6px;margin-top:1.2rem;font-size:12px;color:rgba(255,255,255,.7);text-decoration:none;border:1px solid rgba(255,255,255,.25);padding:5px 14px;border-radius:20px;transition:background .15s;cursor:pointer}
-.home-link:hover{background:rgba(255,255,255,.12);color:#fff}
-.content{max-width:820px;margin:0 auto;padding:2rem 1.5rem}
-.vig-label{display:inline-flex;align-items:center;gap:6px;margin:1.25rem 0 .6rem;font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;padding:5px 12px;border-radius:6px}
-.table-wrap{width:100%;overflow-x:auto;border-radius:var(--radius);border:1px solid var(--border)}
-table{width:100%;border-collapse:collapse;font-size:13px;min-width:380px}
-thead tr{background:var(--navy)}
-th{padding:10px 12px;text-align:left;font-size:10px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:rgba(255,255,255,.75)}
-th:first-child{width:42px;text-align:center}
-td{padding:9px 12px;border-bottom:1px solid var(--border);vertical-align:middle}
-tr:last-child td{border-bottom:none}
-tbody tr:nth-child(even) td{background:#FAFBFD}
-tbody tr:hover td{background:#EBF0FF}
-td:first-child{text-align:center;font-size:11px;color:var(--text3);font-family:var(--mono);width:42px}
-.rad{font-family:var(--mono);font-size:12px;color:var(--text2)}
-.resp{font-size:13px;color:var(--text)}
-.footer{text-align:center;padding:2.5rem 1rem;font-size:11px;color:var(--text3);border-top:1px solid var(--border);margin-top:3rem}
-@media(max-width:600px){.topbar{padding:0 1rem}.hero{padding:2rem 1rem}.content{padding:1.5rem 1rem}}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'DM Sans',sans-serif;
+}
+
+body{
+    background:var(--gris);
+}
+
+/* ===================== TOPBAR ===================== */
+
+.topbar{
+    width:100%;
+    height:60px;
+    background:var(--azul);
+    display:flex;
+    align-items:center;
+    padding:0 20px;
+    position:sticky;
+    top:0;
+    z-index:1000;
+}
+
+.logo-text{
+    color:white;
+    font-size:20px;
+    font-weight:700;
+    margin-right:30px;
+}
+
+.menu{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+}
+
+.menu button{
+    border:none;
+    padding:10px 16px;
+    border-radius:8px;
+    background:rgba(255,255,255,0.12);
+    color:white;
+    cursor:pointer;
+    transition:0.3s;
+    font-size:14px;
+}
+
+.menu button:hover{
+    background:rgba(255,255,255,0.25);
+}
+
+/* ===================== HERO ===================== */
+
+.hero{
+    position:relative;
+    min-height:300px;
+    background:linear-gradient(135deg,var(--azul),var(--azul2));
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    overflow:hidden;
+}
+
+/* Logo fondo superior derecha */
+
+.hero::before{
+    content:"";
+    position:absolute;
+    top:20px;
+    right:20px;
+    width:320px;
+    height:120px;
+    background:url('Logo(1).jpg') no-repeat center;
+    background-size:contain;
+    opacity:0.15;
+}
+
+/* Contenido */
+
+.hero-content{
+    position:relative;
+    z-index:2;
+    color:white;
+    padding:20px;
+}
+
+.hero h1{
+    font-size:48px;
+    margin-bottom:10px;
+}
+
+.hero p{
+    font-size:18px;
+    opacity:0.9;
+}
+
+/* ===================== BOTONES ===================== */
+
+.cards{
+    max-width:1200px;
+    margin:50px auto;
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:20px;
+    padding:20px;
+}
+
+.card{
+    background:white;
+    border-radius:15px;
+    padding:30px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.08);
+    transition:0.3s;
+    text-align:center;
+}
+
+.card:hover{
+    transform:translateY(-5px);
+}
+
+.card h3{
+    margin-bottom:15px;
+    color:var(--azul);
+}
+
+.card button{
+    padding:12px 20px;
+    border:none;
+    border-radius:10px;
+    background:var(--azul);
+    color:white;
+    cursor:pointer;
+    font-size:14px;
+    transition:0.3s;
+}
+
+.card button:hover{
+    background:var(--azul2);
+}
+
+/* ===================== FOOTER ===================== */
+
+footer{
+    text-align:center;
+    padding:25px;
+    background:white;
+    margin-top:40px;
+    color:#555;
+}
+
+/* ===================== RESPONSIVE ===================== */
+
+@media(max-width:768px){
+
+    .hero h1{
+        font-size:32px;
+    }
+
+    .hero::before{
+        width:220px;
+        height:90px;
+    }
+
+    .menu{
+        overflow:auto;
+    }
+}
+
 </style>
 </head>
+
 <body>
 
-<nav class="topbar">
-  <span class="topbar-title">GCSM · Radicados</span>
-  <div class="topbar-sep"></div>
-  <div class="topbar-links">
-    <a class="topbar-link active" onclick="sinPermiso()"><span class="dot" style="background:#93C5FD"></span>GCSM</a>
-    <a class="topbar-link" onclick="sinPermiso()"><span class="dot" style="background:#6EE7B7"></span>Corredores</a>
-    <a class="topbar-link" onclick="sinPermiso()"><span class="dot" style="background:#FCA5A5"></span>Entes Control</a>
-    <a class="topbar-link" onclick="sinPermiso()"><span class="dot" style="background:#C4B5FD"></span>Metro</a>
-    <a class="topbar-link" onclick="sinPermiso()"><span class="dot" style="background:#6EE7B7"></span>Abastecimiento</a>
-    <a class="topbar-link" onclick="sinPermiso()"><span class="dot" style="background:#FCD34D"></span>Red Matriz</a>
-    <a class="topbar-link" onclick="sinPermiso()"><span class="dot" style="background:#FDBA74"></span>Red Troncal</a>
-    <a class="topbar-link" onclick="sinPermiso()"><span class="dot" style="background:#F9A8D4"></span>Bienes Raíces</a>
-  </div>
-</nav>
+<!-- ===================== MENU ===================== -->
 
-<div class="hero" style="background:linear-gradient(135deg,var(--navy) 0%,var(--navy-mid) 60%,#3B66D4 100%);position:relative;">
+<div class="topbar">
 
-<img src="Logo.jpg" alt="Logo" style="position:absolute;top:18px;right:25px;width:220px;height:auto;opacity:.95;mix-blend-mode:multiply;">
+    <div class="logo-text">
+        GCSM
+    </div>
 
-<div style="width:52px;height:52px;border-radius:12px;background:#DBEAFE;display:flex;align-items:center;justify-content:center;margin:0 auto .75rem;font-size:16px;font-weight:700;color:#1E40AF">GC</div>
+    <div class="menu">
+        <button onclick="sinPermiso()">Corredores</button>
+        <button onclick="sinPermiso()">Entes Control</button>
+        <button onclick="sinPermiso()">Metro</button>
+        <button onclick="sinPermiso()">Abastecimiento</button>
+        <button onclick="sinPermiso()">Red Matriz</button>
+        <button onclick="sinPermiso()">Red Troncal</button>
+        <button onclick="sinPermiso()">Bienes Raíces</button>
+    </div>
 
-<div class="hero-eyebrow">Radicados Pendientes</div>
-<h1>Gerencia Corporativa Sistema Maestro</h1>
-<p class="hero-sub">Correspondencia interna y externa · GCSM</p>
-
-<div class="hero-kpis">
-<div class="kpi"><div class="kpi-val">39</div><div class="kpi-lbl">Total pend.</div></div>
-<div class="kpi"><div class="kpi-val">6</div><div class="kpi-lbl">2024</div></div>
-<div class="kpi"><div class="kpi-val">20</div><div class="kpi-lbl">2025</div></div>
-<div class="kpi"><div class="kpi-val">13</div><div class="kpi-lbl">2026</div></div>
 </div>
 
-<a class="home-link" onclick="sinPermiso()">← Volver al índice</a>
-</div>
+<!-- ===================== HERO ===================== -->
 
-<div class="content">
-PEGA AQUÍ EL RESTO DE LAS TABLAS DE TU ARCHIVO ORIGINAL SIN CAMBIAR NADA
-</div>
+<section class="hero">
 
-<div class="footer">MPFD0801F08-03 · Gerencia Corporativa Sistema Maestro · Corte: 30 de marzo de 2026</div>
+    <div class="hero-content">
+        <h1>GCSM</h1>
+        <p>Gerencia Corporativa Sistema Maestro</p>
+    </div>
+
+</section>
+
+<!-- ===================== TARJETAS ===================== -->
+
+<section class="cards">
+
+    <div class="card">
+        <h3>Gestión Documental</h3>
+        <button onclick="sinPermiso()">Ingresar</button>
+    </div>
+
+    <div class="card">
+        <h3>Radicados</h3>
+        <button onclick="sinPermiso()">Ingresar</button>
+    </div>
+
+    <div class="card">
+        <h3>Contratos</h3>
+        <button onclick="sinPermiso()">Ingresar</button>
+    </div>
+
+    <div class="card">
+        <h3>Reportes</h3>
+        <button onclick="sinPermiso()">Ingresar</button>
+    </div>
+
+</section>
+
+<!-- ===================== FOOTER ===================== -->
+
+<footer>
+    © 2025 Acueducto de Bogotá - GCSM
+</footer>
+
+<!-- ===================== SCRIPT ===================== -->
 
 <script>
+
 function sinPermiso(){
-alert('No tienes permiso para consultar');
+    alert("No tiene permiso para visualizar");
 }
+
 </script>
 
 </body>
 </html>
-```
