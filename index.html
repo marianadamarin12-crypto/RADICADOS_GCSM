@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Radicados Pendientes — GCSM 2024–2026</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:        #F7F8FC;
+    --surface:   #FFFFFF;
+    --border:    #E4E7EF;
+    --navy:      #1A2E6C;
+    --navy-mid:  #2547A8;
+    --blue-lt:   #EBF0FF;
+    --text:      #111827;
+    --text2:     #4B5563;
+    --text3:     #9CA3AF;
+    --mono:      'DM Mono', monospace;
+    --sans:      'DM Sans', sans-serif;
+    --radius:    10px;
+
+    --gcsm-bg: #DBEAFE; --gcsm-tx: #1E3A8A;
+    --ca-bg:   #D1FAE5; --ca-tx:   #065F46;
+    --ec-bg:   #FEE2E2; --ec-tx:   #991B1B;
+    --me-bg:   #EDE9FE; --me-tx:   #5B21B6;
+    --da-bg:   #ECFDF5; --da-tx:   #065F46;
+    --rm-bg:   #FEF3C7; --rm-tx:   #78350F;
+    --rt-bg:   #FFEDD5; --rt-tx:   #9A3412;
+    --br-bg:   #FCE7F3; --br-tx:   #9D174D;
+    --gr-bg:   #F1F5F9; --gr-tx:   #475569;
+
+    --y24-bg: #DBEAFE; --y24-tx: #1E40AF;
+    --y25-bg: #D1FAE5; --y25-tx: #065F46;
+    --y26-bg: #FEF3C7; --y26-tx: #78350F;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--sans);
+    background: var(--bg);
+    color: var(--text);
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  /* ── TOP NAV ── */
+  .topbar {
+    position: sticky; top: 0; z-index: 100;
+    background: var(--navy);
+    padding: 0 2rem;
+    display: flex; align-items: center; gap: 1rem;
+    height: 52px;
+    box-shadow: 0 2px 12px rgba(26,46,108,.25);
+  }
+  .topbar-title {
+    font-size: 13px; font-weight: 600; color: #fff;
+    letter-spacing: .02em; white-space: nowrap;
+  }
+  .topbar-sep { width: 1px; height: 20px; background: rgba(255,255,255,.2); flex-shrink: 0; }
+  .topbar-links {
+    display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none; flex: 1;
+  }
+  .topbar-links::-webkit-scrollbar { display: none; }
+  .topbar-link {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 5px 11px; border-radius: 6px;
+    font-size: 12px; font-weight: 500; color: rgba(255,255,255,.75);
+    text-decoration: none; white-space: nowrap;
+    transition: background .15s, color .15s;
+  }
+  .topbar-link:hover { background: rgba(255,255,255,.12); color: #fff; }
+  .topbar-link .dot {
+    width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(135deg, #1A2E6C 0%, #2547A8 60%, #3B66D4 100%);
+    padding: 3.5rem 2rem 3rem;
+    text-align: center;
+  }
+  .hero-eyebrow {
+    display: inline-block; margin-bottom: .75rem;
+    background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.2);
+    color: rgba(255,255,255,.85); font-size: 11px; font-weight: 600;
+    letter-spacing: .08em; text-transform: uppercase;
+    padding: 4px 14px; border-radius: 20px;
+  }
+  .hero h1 {
+    font-size: clamp(1.6rem, 4vw, 2.4rem); font-weight: 600;
+    color: #fff; margin-bottom: .5rem; line-height: 1.2;
+  }
+  .hero-sub { font-size: 14px; color: rgba(255,255,255,.65); margin-bottom: 2rem; }
+  .hero-kpis {
+    display: flex; justify-content: center; gap: 1px;
+    max-width: 560px; margin: 0 auto;
+    background: rgba(255,255,255,.1); border-radius: var(--radius);
+    overflow: hidden;
+  }
+  .kpi { flex: 1; padding: 1rem .75rem; background: rgba(255,255,255,.06); text-align: center; }
+  .kpi-val { font-size: 1.7rem; font-weight: 600; color: #fff; line-height: 1; }
+  .kpi-lbl { font-size: 10px; color: rgba(255,255,255,.55); text-transform: uppercase; letter-spacing: .06em; margin-top: 4px; }
+
+  /* ── INDEX SECTION ── */
+  .index-section {
+    max-width: 860px; margin: 0 auto; padding: 2.5rem 1.5rem 1rem;
+  }
+  .section-label {
+    font-size: 10px; font-weight: 600; letter-spacing: .1em;
+    text-transform: uppercase; color: var(--text3);
+    margin-bottom: 1rem;
+  }
+  .index-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 10px;
+  }
+  .index-card {
+    display: flex; align-items: center; gap: 10px;
+    padding: 12px 14px;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); text-decoration: none;
+    transition: transform .15s, box-shadow .15s, border-color .15s;
+  }
+  .index-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,.08);
+    border-color: var(--navy-mid);
+  }
+  .index-icon {
+    width: 36px; height: 36px; border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 700; flex-shrink: 0;
+  }
+  .index-info { flex: 1; min-width: 0; }
+  .index-name { font-size: 12px; font-weight: 600; color: var(--text); line-height: 1.3; }
+  .index-pend { font-size: 11px; color: var(--text3); margin-top: 2px; }
+  .index-arrow { font-size: 14px; color: var(--text3); flex-shrink: 0; }
+
+  /* ── DIVIDER ── */
+  .divider { height: 1px; background: var(--border); max-width: 860px; margin: 1.5rem auto; }
+
+  /* ── AREA SECTION ── */
+  .area-section { max-width: 860px; margin: 0 auto; padding: 2rem 1.5rem; }
+
+  .area-header {
+    display: flex; align-items: center; gap: 12px; margin-bottom: 1.5rem;
+    padding-bottom: 1rem; border-bottom: 2px solid var(--border);
+  }
+  .area-icon {
+    width: 44px; height: 44px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 700; flex-shrink: 0;
+  }
+  .area-name { font-size: 1.1rem; font-weight: 600; color: var(--text); flex: 1; }
+  .area-badge {
+    padding: 4px 12px; border-radius: 20px;
+    font-size: 11px; font-weight: 600;
+    background: #F1F5F9; color: var(--text2);
+  }
+  .back-link {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-size: 11px; color: var(--navy-mid); text-decoration: none;
+    margin-bottom: .75rem; font-weight: 500;
+  }
+  .back-link:hover { text-decoration: underline; }
+
+  /* ── VIG BADGE ── */
+  .vig-label {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin: 1.25rem 0 .6rem;
+    font-size: 11px; font-weight: 600; letter-spacing: .04em;
+    text-transform: uppercase; padding: 5px 12px; border-radius: 6px;
+  }
+
+  /* ── TABLE ── */
+  .table-wrap { width: 100%; overflow-x: auto; border-radius: var(--radius); border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; min-width: 420px; }
+  thead tr { background: var(--navy); }
+  th {
+    padding: 10px 12px; text-align: left;
+    font-size: 10px; font-weight: 600; letter-spacing: .07em;
+    text-transform: uppercase; color: rgba(255,255,255,.75);
+  }
+  th:first-child { width: 42px; text-align: center; }
+  td {
+    padding: 9px 12px; border-bottom: 1px solid var(--border);
+    vertical-align: middle;
+  }
+  tr:last-child td { border-bottom: none; }
+  tbody tr:nth-child(even) td { background: #FAFBFD; }
+  tbody tr:hover td { background: var(--blue-lt); }
+  td:first-child {
+    text-align: center; font-size: 11px; color: var(--text3);
+    font-family: var(--mono); width: 42px;
+  }
+  .rad { font-family: var(--mono); font-size: 12px; color: var(--text2); }
+  .resp { font-size: 13px; color: var(--text); }
+
+  /* ── FOOTER ── */
+  .footer {
+    text-align: center; padding: 2.5rem 1rem;
+    font-size: 11px; color: var(--text3); border-top: 1px solid var(--border);
+    margin-top: 3rem;
+  }
+
+  @media (max-width: 600px) {
+    .topbar { padding: 0 1rem; }
+    .hero { padding: 2.5rem 1rem 2rem; }
+    .hero-kpis { flex-direction: column; gap: 1px; }
+    .area-section, .index-section { padding: 1.5rem 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── TOP NAV ── -->
+<nav class="topbar">
+  <span class="topbar-title">GCSM · Radicados</span>
+  <div class="topbar-sep"></div>
+  <div class="topbar-links">
+    <a class="topbar-link" href="#area_gcsm"><span class="dot" style="background:#93C5FD"></span>GCSM</a>
+    <a class="topbar-link" href="#area_ca"><span class="dot" style="background:#6EE7B7"></span>Corredores</a>
+    <a class="topbar-link" href="#area_ec"><span class="dot" style="background:#FCA5A5"></span>Entes Control</a>
+    <a class="topbar-link" href="#area_metro"><span class="dot" style="background:#C4B5FD"></span>Metro</a>
+    <a class="topbar-link" href="#area_daba"><span class="dot" style="background:#6EE7B7"></span>Abastecimiento</a>
+    <a class="topbar-link" href="#area_drm"><span class="dot" style="background:#FCD34D"></span>Red Matriz</a>
+    <a class="topbar-link" href="#area_drt"><span class="dot" style="background:#FDBA74"></span>Red Troncal</a>
+    <a class="topbar-link" href="#area_dbr"><span class="dot" style="background:#F9A8D4"></span>Bienes Raíces</a>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<div class="hero">
+  <div class="hero-eyebrow">Gerencia Corporativa Sistema Maestro</div>
+  <h1>Radicados Pendientes por Área</h1>
+  <p class="hero-sub">Gestión de correspondencia · Vigencias 2024 – 2025 – 2026 · Corte: 30 marzo 2026</p>
+  <div class="hero-kpis">
+    <div class="kpi"><div class="kpi-val">193</div><div class="kpi-lbl">Pendientes</div></div>
+    <div class="kpi"><div class="kpi-val">5,069</div><div class="kpi-lbl">Total entradas</div></div>
+    <div class="kpi"><div class="kpi-val">96.2%</div><div class="kpi-lbl">Efectividad</div></div>
+    <div class="kpi"><div class="kpi-val">8</div><div class="kpi-lbl">Áreas</div></div>
+  </div>
+</div>
+
+<!-- ── INDEX ── -->
+<div class="index-section">
+  <div class="section-label">Ir directamente a un área</div>
+  <div class="index-grid">
+    <a class="index-card" href="#area_gcsm">
+      <div class="index-icon" style="background:var(--gcsm-bg);color:var(--gcsm-tx)">GC</div>
+      <div class="index-info"><div class="index-name">Gerencia GCSM</div><div class="index-pend">39 pendientes</div></div>
+      <span class="index-arrow">→</span>
+    </a>
+    <a class="index-card" href="#area_ca">
+      <div class="index-icon" style="background:var(--ca-bg);color:var(--ca-tx)">CA</div>
+      <div class="index-info"><div class="index-name">Corredores Ambientales</div><div class="index-pend">4 pendientes</div></div>
+      <span class="index-arrow">→</span>
+    </a>
+    <a class="index-card" href="#area_ec">
+      <div class="index-icon" style="background:var(--ec-bg);color:var(--ec-tx)">EC</div>
+      <div class="index-info"><div class="index-name">Entes de Control</div><div class="index-pend">11 pendientes</div></div>
+      <span class="index-arrow">→</span>
+    </a>
+    <a class="index-card" href="#area_metro">
+      <div class="index-icon" style="background:var(--me-bg);color:var(--me-tx)">ME</div>
+      <div class="index-info"><div class="index-name">Metro</div><div class="index-pend">2 pendientes</div></div>
+      <span class="index-arrow">→</span>
+    </a>
+    <a class="index-card" href="#area_daba">
+      <div class="index-icon" style="background:var(--da-bg);color:var(--da-tx)">DA</div>
+      <div class="index-info"><div class="index-name">Dir. Abastecimiento</div><div class="index-pend">29 pendientes</div></div>
+      <span class="index-arrow">→</span>
+    </a>
+    <a class="index-card" href="#area_drm">
+      <div class="index-icon" style="background:var(--rm-bg);color:var(--rm-tx)">RM</div>
+      <div class="index-info"><div class="index-name">Dir. Red Matriz</div><div class="index-pend">34 pendientes</div></div>
+      <span class="index-arrow">→</span>
+    </a>
+    <a class="index-card" href="#area_drt">
+      <div class="index-icon" style="background:var(--rt-bg);color:var(--rt-tx)">RT</div>
+      <div class="index-info"><div class="index-name">Dir. Red Troncal</div><div class="index-pend">40 pendientes</div></div>
+      <span class="index-arrow">→</span>
+    </a>
+    <a class="index-card" href="#area_dbr">
+      <div class="index-icon" style="background:var(--br-bg);color:var(--br-tx)">BR</div>
+      <div class="index-info"><div class="index-name">Dir. Bienes Raíces</div><div class="index-pend">34 pendientes</div></div>
+      <span class="index-arrow">→</span>
+    </a>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ════════════════════════════════════════
+     ÁREAS
+════════════════════════════════════════ -->
+
+<!-- ── GCSM ── -->
+<div class="area-section" id="area_gcsm">
+  <a class="back-link" href="#top">↑ Volver al índice</a>
+  <div class="area-header">
+    <div class="area-icon" style="background:var(--gcsm-bg);color:var(--gcsm-tx)">GC</div>
+    <div class="area-name">Gerencia Corporativa Sistema Maestro</div>
+    <span class="area-badge">39 pendientes</span>
+  </div>
+
+  <div class="vig-label" style="background:var(--y24-bg);color:var(--y24-tx)">▸ 2024 — 6 pendientes</div>
+  <div class="table-wrap"><table>
+    <thead><tr><th>#</th><th>Entrada / Radicado</th><th>Área responsable</th></tr></thead>
+    <tbody>
+      <tr><td>01</td><td class="rad">3310001-2024-032</td><td class="resp">Diego G. Montero Osorio</td></tr>
+      <tr><td>02</td><td class="rad">1442002-2024-1000</td><td class="resp">Diego G. Montero Osorio</td></tr>
+      <tr><td>03</td><td class="rad">2620001-2024-DIE-172</td><td class="resp">Diego G. Montero Osorio</td></tr>
+      <tr><td>04</td><td class="rad">2620001-2024-DIE-184</td><td class="resp">Directores</td></tr>
+      <tr><td>05</td><td class="rad">1050001-2024-0296</td><td class="resp">Héctor Andrés Loaiza</td></tr>
+      <tr><td>06</td><td class="rad">1330001-2024-0583</td><td class="resp">Héctor Andrés Loaiza</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="vig-label" style="background:var(--y25-bg);color:var(--y25-tx)">▸ 2025 — 20 pendientes</div>
+  <div class="table-wrap"><table>
+    <thead><tr><th>#</th><th>Entrada / Radicado</th><th>Área responsable</th></tr></thead>
+    <tbody>
+      <tr><td>01</td><td class="rad">1330001-2025-0334</td><td class="resp">GCSM</td></tr>
+      <tr><td>02</td><td class="rad">1050001-2025-0521</td><td class="resp">GCSM</td></tr>
+      <tr><td>03</td><td class="rad">13700-2025-064</td><td class="resp">Direcciones</td></tr>
+      <tr><td>04</td><td class="rad">11900-2025-0498</td><td class="resp">Héctor Loaiza</td></tr>
+      <tr><td>05</td><td class="rad">1330001-2025-0178</td><td class="resp">Direcciones · Gerencia</td></tr>
+      <tr><td>06</td><td class="rad">1330001-2025-0201</td><td class="resp">DRT · DABA · DRM · GCSM</td></tr>
+      <tr><td>07</td><td class="rad">13700-2025-0166</td><td class="resp">DRT · DABA · DRM · GCSM</td></tr>
+      <tr><td>08</td><td class="rad">2620001-2025-DIE-089</td><td class="resp">Direcciones</td></tr>
+      <tr><td>09</td><td class="rad">1330001-2025-0270</td><td class="resp">DRT · DABA · DRM · GCSM</td></tr>
+      <tr><td>10</td><td class="rad">13700-2025-0247</td><td class="resp">Direcciones · Gerencia</td></tr>
+      <tr><td>11</td><td class="rad">15200-2025-204</td><td class="resp">Direcciones · Gerencia</td></tr>
+      <tr><td>12</td><td class="rad">1330001-2025-0411</td><td class="resp">DRT · DABA · DRM · GCSM</td></tr>
+      <tr><td>13</td><td class="rad">1330001-2025-0468</td><td class="resp">DABA · CA · DRT · DRM</td></tr>
+      <tr><td>14</td><td class="rad">13700-2025-0376</td><td class="resp">Direcciones · Gerencia</td></tr>
+      <tr><td>15</td><td class="rad">1330001-2025-0533</td><td class="resp">Direcciones · Gerencia</td></tr>
+      <tr><td>16</td><td class="rad">1330001-2025-0587</td><td class="resp">Direcciones · Gerencia</td></tr>
+      <tr><td>17</td><td class="rad">1330001-2025-0627</td><td class="resp">Direcciones · Gerencia</td></tr>
+      <tr><td>18</td><td class="rad">1330001-2025-0689</td><td class="resp">Direcciones · Gerencia</td></tr>
+      <tr><td>19</td><td class="rad">1210001-2025-0212</td><td class="resp">Direcciones · Gerencia</td></tr>
+      <tr><td>20</td><td class="rad">1050001-2025-0525</td><td class="resp">DRM · DABA</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="vig-label" style="background:var(--y26-bg);color:var(--y26-tx)">▸ 2026 ene–feb — 13 pendientes</div>
+  <div class="table-wrap"><table>
+    <thead><tr><th>#</th><th>Entrada / Radicado</th><th>Área responsable</th></tr></thead>
+    <tbody>
+      <tr><td>01</td><td class="rad">10600-2026-0072</td><td class="resp">GCSM</td></tr>
+      <tr><td>02</td><td class="rad">1050001-2026-0025</td><td class="resp">GCSM</td></tr>
+      <tr><td>03</td><td class="rad">1050001-2026-0031</td><td class="resp">GCSM</td></tr>
+      <tr><td>04</td><td class="rad">1050001-2026-0027</td><td class="resp">GCSM</td></tr>
+      <tr><td>05</td><td class="rad">1421001-2026-00378</td><td class="resp">GCSM</td></tr>
+      <tr><td>06</td><td class="rad">1451001-2026-0109</td><td class="resp">GCSM</td></tr>
+      <tr><td>07</td><td class="rad">1250001-2026-056</td><td class="resp">GCSM</td></tr>
+      <tr><td>08</td><td class="rad">2610001-2026-00035</td><td class="resp">GCSM</td></tr>
+      <tr><td>09</td><td class="rad">1520001-2026-008</td><td class="resp">Direcciones</td></tr>
+      <tr><td>10</td><td class="rad">13700-2026-015</td><td class="resp">Direcciones · Gerencia</td></tr>
+      <tr><td>11</td><td class="rad">1451001-2026-0154</td><td class="resp">Direcciones · Gerencia</td></tr>
+      <tr><td>12</td><td class="rad">1190001-2026-0268</td><td class="resp">Direcciones · Gerencia</td></tr>
+      <tr><td>13</td><td class="rad">1330001-2026-083</td><td class="resp">Direcciones · Gerencia</td></tr>
+    </tbody>
+  </table></div>
+</div><div class="divider"></div>
+
+<!-- ── CORREDORES AMBIENTALES ── -->
+<div class="area-section" id="area_ca">
+  <a class="back-link" href="#top">↑ Volver al índice</a>
+  <div class="area-header">
+    <div class="area-icon" style="background:var(--ca-bg);color:var(--ca-tx)">CA</div>
+    <div class="area-name">Corredores Ambientales</div>
+    <span class="area-badge">4 pendientes</span>
+  </div>
+  <div class="vig-label" style="background:var(--y25-bg);color:var(--y25-tx)">▸ 2025 — 1 pendiente</div>
+  <div class="table-wrap"><table>
+    <thead><tr><th>#</th><th>Entrada / Radicado</th><th>Área responsable</th></tr></thead>
+    <tbody>
+      <tr><td>01</td><td class="rad">2420001-2025-1137</td><td class="resp">Gilma Patricia Chacón Tunjo</td></tr>
+    </tbody>
+  </table></div>
+  <div class="vig-label" style="background:var(--y26-bg);color:var(--y26-tx)">▸ 2026 ene–feb — 3 pendientes</div>
+  <div class="table-wrap"><table>
+    <thead><tr><th>#</th><th>Entrada / Radicado</th><th>Área responsable</th></tr></thead>
+    <tbody>
+      <tr><td>01</td><td class="rad">15300-2026-0208</td><td class="resp">Corredores Ambientales</td></tr>
+      <tr><td>02</td><td class="rad">15300-2026-0256</td><td class="resp">Corredores Ambientales</td></tr>
+      <tr><td>03</td><td class="rad">1190001-2026-0240</td><td class="resp">Corredores Ambientales</td></tr>
+    </tbody>
+  </table></div>
+</div><div class="divider"></div>
+
+<!-- ── ENTES DE CONTROL ── -->
+<div class="area-section" id="area_ec">
+  <a class="back-link" href="#top">↑ Volver al índice</a>
+  <div class="area-header">
+    <div class="area-icon" style="background:var(--ec-bg);color:var(--ec-tx)">EC</div>
+    <div class="area-name">Entes de Control</div>
+    <span class="area-badge">11 pendientes</span>
+  </div>
+  <div class="vig-label" style="background:var(--y24-bg);color:var(--y24-tx)">▸ 2024 — 3 pendientes</div>
+  <div class="table-wrap"><table>
+    <thead><tr><th>#</th><th>Entrada / Radicado</th><th>Área responsable</th></tr></thead>
+    <tbody>
+      <tr><td>01</td><td class="rad">10600-2024-0510</td><td class="resp">Entes de Control</td></tr>
+      <tr><td>02</td><td class="rad">10600-2024-0511</td><td class="resp">Entes de Control</td></tr>
+      <tr><td>03</td><td class="rad">10600-2024-3634</td><td class="resp">Entes de Control</td></tr>
+    </tbody>
+  </table></div>
+  <div class="vig-label" style="background:var(--y25-bg);color:var(--y25-tx)">▸ 2025 — 4 pendientes</div>
+  <div class="table-wrap"><table>
+    <thead><tr><th>#</th><th>Entrada / Radicado</th><th>Área responsable</th></tr></thead>
+    <tbody>
+      <tr><td>01</td><td class="rad">1050001-2025-0496</td><td class="resp">Juan Pablo Contreras</td></tr>
+      <tr><td>02</td><td class="rad">1050001-2025-0504</td><td class="resp">Juan Pablo Contreras</td></tr>
+      <tr><td>03</td><td class="rad">1250001-2025-236</td><td class="resp">Juan Pablo Contreras</td></tr>
+      <tr><td>04</td><td class="rad">1250001-2025-0240</td><td class="resp">Juan Pablo Contreras</td></tr>
+    </tbody>
+  </table></div>
+  <div class="vig-label" style="background:var(--y26-bg);color:var(--y26-tx)">▸ 2026 ene–feb — 4 pendientes</div>
+  <div class="table-wrap"><table>
+    <thead><tr><th>#</th><th>Entrada / Radicado</th><th>Área responsable</th></tr></thead>
+    <tbody>
+      <tr><td>01</td><td class="rad">E-2026-010383</td><td class="resp">Entes de Control</td></tr>
+      <tr><td>02</td><td class="rad">E-2026-015616</td><td class="resp">Entes de Control</td></tr>
+      <tr><td>03</td><td class="rad">E-2026-021010</td><td class="resp">Entes de Control</td></tr>
+      <tr><td>04</td><td class="rad">1230001-2026-0042</td><td class="resp">Entes de Control</td></tr>
+    </tbody>
+  </table></div>
+</div><div class="divider"></div>
+
+<!-- ── METRO ── -->
+<div class="area-section" id="area_metro">
+  <a class="back-link" href="#top">↑ Volver al índice</a>
+  <div class="area-header">
+    <div class="area-icon" style="background:var(--me-bg);color:var(--me-tx)">ME</div>
+    <div class="area-name">Metro</div>
+    <span class="area-badge">2 pendientes</span>
+  </div>
+  <div class="vig-label" style="background:var(--y25-bg);color:var(--y25-tx)">▸ 2025 — 1 pendiente</div>
+  <div class="table-wrap"><table>
+    <thead><tr><th>#</th><th>Entrada / Radicado</th><th>Área responsable</th></tr></thead>
+    <tbody>
+      <tr><td>01</td><td class="rad">E-2025-150321</td><td class="resp">Óscar Arnulfo Sequera</td></tr>
+    </tbody>
+  </table></div>
+  <div class="vig-label" style="background:var(--y26-bg);color:var(--y26-tx)">▸ 2026 ene–feb — 1 pendiente</div>
+  <div class="table-wrap"><table>
+    <thead><tr><th>#</th><th>Entrada / Radicado</th><th>Área responsable</th></tr></thead>
+    <tbody>
+      <tr><td>01</td><td class="rad">E-2026-016336</td><td class="resp">Óscar Arnulfo Sequera</td></tr>
+    </tbody>
+  </table></div>
+</div><div class="divider"></div>
+
+<!-- ── DIR. ABASTECIMIENTO ── -->
+<div class="area-section" id="area_daba">
+  <a class="back-link" href="#top">↑ Volver al índice</a>
+  <div class="area-header">
+    <div class="area-icon" style="background:var(--da-bg);color:var(--da-tx)">DA</div>
+    <div class="area-name">Dirección Abastecimiento</div>
+    <span class="area-badge">29 pendientes</span>
+  </div>
+  <div class="vig-label" style="background:var(--y24-bg);color:var(--y24-tx)">▸ 2024 — 6 pendientes</div>
+  <div class="table-wrap"><table>
+    <thead><tr><th>#</th><th>Entrada / Radicado</th><th>Área responsable</th></tr></thead>
+    <tbody>
+      <tr><td>01</td><td class="rad">15200-2024-0410</td><td class="resp">Dir. Abastecimiento</td></tr>
+      <tr><td>02</td><td class="rad">15300-2024-1804</td><td class="resp">Dir. Abastecimiento</td></tr>
+      <tr><td>03</td><td class="rad">6010001-2024-0035</td><td class="resp">G. Marrugo · M. Jiménez</td></tr>
+      <tr><td>04</td><td class="rad">1471001-2024-0362</td><td class="resp">Directores</td></tr>
+      <tr><td>05</td><td class="rad">1180001-2024-0118</td><td class="resp">Directores</td></tr>
+      <tr><td>06</td><td class="rad">2620001-2024-DIE-248</td><td class="resp">G. Marrugo · M. Jiménez</td></tr>
+    </tbody>
+  </table></div>
+  <div class="vig-label" style="background:var(--y25-bg);color:var(--y25-tx)">▸ 2025 — 11 pendientes</div>
+  <div class="table-wrap"><table>
+    <thead><tr><th>#</th><th>Entrada / Radicado</th><th>Área responsable</th></tr></thead>
+    <tbody>
+      <tr><td>01</td><td class="rad">E-2025-104502</td><td class="resp">DABA</td></tr>
+      <tr><td>02</td><td class="rad">1230001-2025-193</td><td class="resp">DABA</td></tr>
+      <tr><td>03</td><td class="rad">15300-2025-1889</td><td class="resp">DABA</td></tr>
+      <tr><td>04</td><td class="rad">E-2025-140232</td><td class="resp">DABA</td></tr>
+      <tr><td>05</td><td class="rad">E-2025-145047</td><td class="resp">DABA</td></tr>
+      <tr><td>06</td><td class="rad">11900-2025-5716</td><td class="resp">DABA</td></tr>
+      <tr><td>07</td><td class="rad">1330001-2025-0151</td><td class="resp">DRT · DABA</td></tr>
+      <tr><td>08</td><td class="rad">1330001-2025-0178</td><td class="resp">Direcciones · Gerencia</td></tr>
+      <tr><td>09</td><td class="rad">E-2025-144312</td><td class="resp">DRT · DABA</td></tr>
+      <tr><td>10</td><td class="rad">1451001-2025-1690</td><td class="resp">Direcciones · Gerencia</td></tr>
+      <tr><td>11</td><td class="rad">CORREO</td><td class="resp">DRMA · DRTA · DABA · DBR</td></tr>
+    </tbody>
+  </table></div>
+  <div class="vig-label" style="background:var(--y26-bg);color:var(--y26-tx)">▸ 2026 ene–feb — 12 pendientes</div>
+  <div class="table-wrap"><table>
+    <thead><tr><th>#</th><th>Entrada / Radicado</th><th>Área responsable</th></tr></thead>
+    <tbody>
+      <tr><td>01</td><td class="rad">RECIBO CAJA_950004121</td><td class="resp">DABA</td></tr>
+      <tr><td>02</td><td class="rad">2541001-2026-0040</td><td class="resp">DABA</td></tr>
+      <tr><td>03</td><td class="rad">2420001-2026-0163</td><td class="resp">DABA</td></tr>
+      <tr><td>04</td><td class="rad">15300-2026-0322</td><td class="resp">DABA</td></tr>
+      <tr><td>05</td><td class="rad">15300-2026-24</td><td class="resp">DRM · DABA · DBR</td></tr>
+      <tr><td>06</td><td class="rad">1360001-2026-010</td><td class="resp">DRT · DABA · DRM</td></tr>
+      <tr><td>07</td><td class="rad">1210001-2026-0037</td><td class="resp">DRT · DABA · DRM</td></tr>
+      <tr><td>08</td><td class="rad">E-2026-013901</td><td class="resp">DRT · DABA · DRM</td></tr>
+      <tr><td>09</td><td class="rad">1451001-2026-0154</td><td class="resp">Direcciones · Gerencia</td></tr>
+      <tr><td>10</td><td class="rad">1190001-2026-0268</td><td class="resp">Direcciones · Gerencia</td></tr>
+      <tr><td>11</td><td class="rad">1330001-2026-083</td><td class="resp">Direcciones · Gerencia</td></tr>
+      <tr><td>12</td><td class="rad">E-2026-023423</td><td class="resp">DABA · DRMA</td></tr>
+    </tbody>
+  </table></div>
+</div><div class="divider"></div>
+
+<!-- ── DIR. RED MATRIZ ── -->
+<div class="area-section" id="area_drm">
+  <a class="back-link" href="#top">↑ Volver al índice</a>
+  <div class="area-header">
+    <div class="area-icon" style="background:var(--rm-bg);color:var(--rm-tx)">RM</div>
+    <div class="area-name">Dirección Red Matriz</div>
+    <span class="area-badge">34 pendientes</span>
+  </div>
+  <div class="vig-label" style="background:var(--y24-bg);color:var(--y24-tx)">▸ 2024 — 6 pendientes</div>
+  <div class="table-wrap"><table>
+    <thead><tr><th>#</th><th>Entrada / Radicado</th><th>Área responsable</th></tr></thead>
+    <tbody>
+      <tr><td>01</td><td class="rad">15300-2024-0705</td><td class="resp">Mauricio Jiménez</td></tr>
+      <tr><td>02</td><td class="rad">11900-2024-1124</td><td class="resp">Mauricio Jiménez</td></tr>
+      <tr><td>03</td><td class="rad">10600-2024-1953</td><td class="resp">Mauricio Jiménez</td></tr>
+      <tr><td>04</td><td class="rad">6010001-2024-0035</td><td class="resp">G. Marrugo · M. Jiménez</td></tr>
+      <tr><td>05</td><td class="rad">2620001-2024-DIE-248</td><td class="resp">G. Marrugo · M. Jiménez</td></tr>
+      <tr><td>06</td><td class="rad">1210001-2024-0207</td><td class="resp">L. Serrato · G. García · M. Jiménez</td></tr>
+    </tbody>
+  </table></div>
+  <div class="vig-label" style="background:var(--y25-bg);color:var(--y25-tx)">▸ 2025 — 6 pendientes</div>
+  <div class="table-wrap"><table>
+    <thead><tr><th>#</th><th>Entrada / Radicado</th><th>Área responsable</th></tr></thead>
+    <tbody>
+      <tr><td>01</td><td class="rad">15300-2025-1993</td><td class="resp">DRMA</td></tr>
+      <tr><td>02</td><td class="rad">15300-2025-2210</td><td class="resp">DRMA</td></tr>
+      <tr><td>03</td><td class="rad">15200-2025-204</td><td class="resp">Direcciones · Gerencia</td></tr>
+      <tr><td>04</td><td class="rad">2620001-2025-DIE-336</td><td class="resp">DRM · DRT</td></tr>
+      <tr><td>05</td><td class="rad">1451001-2025-1690</td><td class="resp">Direcciones · Gerencia</td></tr>
+      <tr><td>06</td><td class="rad">11900-2025-5727</td><td class="resp">DRT · DABA · DRM</td></tr>
+    </tbody>
+  </table></div>
+  <div class="vig-label" style="background:var(--y26-bg);color:var(--y26-tx)">▸ 2026 ene–feb — 22 pendientes</div>
+  <div class="table-wrap"><table>
+    <thead><tr><th>#</th><th>Entrada / Radicado</th><th>Área responsable</th></tr></thead>
+    <tbody>
+      <tr><td>01</td><td class="rad">15300-2026-45</td><td class="resp">DRMA</td></tr>
+      <tr><td>02</td><td class="rad">15300-2026-0067</td><td class="resp">DRMA</td></tr>
+      <tr><td>03</td><td class="rad">1190001-2026-0100</td><td class="resp">DRMA</td></tr>
+      <tr><td>04</td><td class="rad">15300-2026-0187</td><td class="resp">DRMA</td></tr>
+      <tr><td>05</td><td class="rad">2610001-2026-00025</td><td class="resp">DRMA</td></tr>
+      <tr><td>06</td><td class="rad">15300-2026-0235</td><td class="resp">DRMA</td></tr>
+      <tr><td>07</td><td class="rad">2420001-2026-0251</td><td class="resp">DRMA</td></tr>
+      <tr><td>08</td><td class="rad">CORREO (1)</td><td class="resp">DRMA</td></tr>
+      <tr><td>09</td><td class="rad">E-2026-018863</td><td class="resp">DRMA</td></tr>
+      <tr><td>10</td><td class="rad">CORREO (2)</td><td class="resp">DRMA</td></tr>
+      <tr><td>11</td><td class="rad">E-2026-013998</td><td class="resp">DRMA</td></tr>
+      <tr><td>12</td><td class="rad">E-2026-019221</td><td class="resp">DRMA</td></tr>
+      <tr><td>13</td><td class="rad">1190001-2026-0272</td><td class="resp">DRMA</td></tr>
+      <tr><td>14</td><td class="rad">15300-2026-0317</td><td class="resp">DRMA</td></tr>
+      <tr><td>15</td><td class="rad">15300-2026-24</td><td class="resp">DRM · DABA · DBR</td></tr>
+      <tr><td>16</td><td class="rad">13700-2026-015</td><td class="resp">Direcciones · Gerencia</td></tr>
+      <tr><td>17</td><td class="rad">2620001-2026-DIE-010</td><td class="resp">DRM · DRT</td></tr>
+      <tr><td>18</td><td class="rad">E-2026-013901</td><td class="resp">DRT · DABA · DRM</td></tr>
+      <tr><td>19</td><td class="rad">1451001-2026-0154</td><td class="resp">Direcciones · Gerencia</td></tr>
+      <tr><td>20</td><td class="rad">1190001-2026-0268</td><td class="resp">Direcciones · Gerencia</td></tr>
+      <tr><td>21</td><td class="rad">1330001-2026-083</td><td class="resp">Direcciones · Gerencia</td></tr>
+      <tr><td>22</td><td class="rad">E-2026-023423</td><td class="resp">DABA · DRMA</td></tr>
+    </tbody>
+  </table></div>
+</div><div class="divider"></div>
+
+<!-- ── DIR. RED TRONCAL ── -->
+<div class="area-section" id="area_drt">
+  <a class="back-link" href="#top">↑ Volver al índice</a>
+  <div class="area-header">
+    <div class="area-icon" style="background:var(--rt-bg);color:var(--rt-tx)">RT</div>
+    <div class="area-name">Dirección Red Troncal</div>
+    <span class="area-badge">40 pendientes</span>
+  </div>
+  <div class="vig-label" style="background:var(--y25-bg);color:var(--y25-tx)">▸ 2025 — 13 pendientes</div>
+  <div class="table-wrap"><table>
+    <thead><tr><th>#</th><th>Entrada / Radicado</th><th>Área responsable</th></tr></thead>
+    <tbody>
+      <tr><td>01</td><td class="rad">E-2025-127424</td><td class="resp">DRTA</td></tr>
+      <tr><td>02</td><td class="rad">1471001-S-2025-338688</td><td class="resp">DRTA</td></tr>
+      <tr><td>03</td><td class="rad">E-2025-155122</td><td class="resp">DRTA</td></tr>
+      <tr><td>04</td><td class="rad">1330001-2025-0178</td><td class="resp">Direcciones · Gerencia</td></tr>
+      <tr><td>05</td><td class="rad">1330001-2025-0270</td><td class="resp">DRT · DABA · DRM · GCSM</td></tr>
+      <tr><td>06</td><td class="rad">1330001-2025-0411</td><td class="resp">DRT · DABA · DRM · GCSM</td></tr>
+      <tr><td>07</td><td class="rad">1330001-2025-0533</td><td class="resp">Direcciones · Gerencia</td></tr>
+      <tr><td>08</td><td class="rad">1360001-2025-848</td><td class="resp">DRT · DABA</td></tr>
+      <tr><td>09</td><td class="rad">1330001-2025-0587</td><td class="resp">Direcciones · Gerencia</td></tr>
+      <tr><td>10</td><td class="rad">1210001-2025-0193</td><td class="resp">DRT · DABA · DRM</td></tr>
+      <tr><td>11</td><td class="rad">E-2025-144312</td><td class="resp">DRT · DABA</td></tr>
+      <tr><td>12</td><td class="rad">1451001-2025-1690</td><td class="resp">Direcciones · Gerencia</td></tr>
+      <tr><td>13</td><td class="rad">11900-2025-5727</td><td class="resp">DRT · DABA · DRM</td></tr>
+    </tbody>
+  </table></div>
+  <div class="vig-label" style="background:var(--y26-bg);color:var(--y26-tx)">▸ 2026 ene–feb — 27 pendientes</div>
+  <div class="table-wrap"><table>
+    <thead><tr><th>#</th><th>Entrada / Radicado</th><th>Área responsable</th></tr></thead>
+    <tbody>
+      <tr><td>01</td><td class="rad">RECIBO CAJA_950004120</td><td class="resp">DRTA</td></tr>
+      <tr><td>02</td><td class="rad">1520001-2026-011</td><td class="resp">DRTA</td></tr>
+      <tr><td>03</td><td class="rad">1190001-2026-0065</td><td class="resp">DRTA</td></tr>
+      <tr><td>04</td><td class="rad">1190001-2026-0073</td><td class="resp">DRTA</td></tr>
+      <tr><td>05</td><td class="rad">15300-2026-0115</td><td class="resp">DRTA</td></tr>
+      <tr><td>06</td><td class="rad">E-2026-011258</td><td class="resp">DRTA</td></tr>
+      <tr><td>07</td><td class="rad">1190001-2026-0130</td><td class="resp">DRTA</td></tr>
+      <tr><td>08</td><td class="rad">2420001-2026-0162</td><td class="resp">DRTA</td></tr>
+      <tr><td>09</td><td class="rad">15300-2026-198</td><td class="resp">DRTA</td></tr>
+      <tr><td>10</td><td class="rad">1360001-2026-093</td><td class="resp">DRTA</td></tr>
+      <tr><td>11</td><td class="rad">E-2026-017616</td><td class="resp">DRTA</td></tr>
+      <tr><td>12</td><td class="rad">E-2026-017899</td><td class="resp">DRTA</td></tr>
+      <tr><td>13</td><td class="rad">CORREO (1)</td><td class="resp">DRTA</td></tr>
+      <tr><td>14</td><td class="rad">CORREO (2)</td><td class="resp">DRTA</td></tr>
+      <tr><td>15</td><td class="rad">10600-2026-0543</td><td class="resp">DRTA</td></tr>
+      <tr><td>16</td><td class="rad">E-2026-021717</td><td class="resp">DRTA</td></tr>
+      <tr><td>17</td><td class="rad">1250001-2026-064</td><td class="resp">DRTA</td></tr>
+      <tr><td>18</td><td class="rad">1360001-2026-010</td><td class="resp">L. Serrato · M. Jiménez · Dir.(E) DABA</td></tr>
+      <tr><td>19</td><td class="rad">1520001-2026-008</td><td class="resp">Directores</td></tr>
+      <tr><td>20</td><td class="rad">1050001-2026-0016</td><td class="resp">Directores</td></tr>
+      <tr><td>21</td><td class="rad">13700-2026-015</td><td class="resp">Directores · Mauricio Soler</td></tr>
+      <tr><td>22</td><td class="rad">1210001-2026-0037</td><td class="resp">Directores</td></tr>
+      <tr><td>23</td><td class="rad">2620001-2026-DIE-010</td><td class="resp">L. Serrato · M. Jiménez</td></tr>
+      <tr><td>24</td><td class="rad">E-2026-013901</td><td class="resp">Directores</td></tr>
+      <tr><td>25</td><td class="rad">1451001-2026-0154</td><td class="resp">Directores</td></tr>
+      <tr><td>26</td><td class="rad">1190001-2026-0268</td><td class="resp">Directores</td></tr>
+      <tr><td>27</td><td class="rad">1330001-2026-083</td><td class="resp">Sin asignación</td></tr>
+    </tbody>
+  </table></div>
+</div><div class="divider"></div>
+
+<!-- ── DIR. BIENES RAÍCES ── -->
+<div class="area-section" id="area_dbr">
+  <a class="back-link" href="#top">↑ Volver al índice</a>
+  <div class="area-header">
+    <div class="area-icon" style="background:var(--br-bg);color:var(--br-tx)">BR</div>
+    <div class="area-name">Dirección Bienes Raíces</div>
+    <span class="area-badge">34 pendientes</span>
+  </div>
+  <div class="vig-label" style="background:var(--y24-bg);color:var(--y24-tx)">▸ 2024 — 12 pendientes</div>
+  <div class="table-wrap"><table>
+    <thead><tr><th>#</th><th>Entrada / Radicado</th><th>Área responsable</th></tr></thead>
+    <tbody>
+      <tr><td>01</td><td class="rad">1330001-2024-0259</td><td class="resp">Dir. Bienes Raíces</td></tr>
+      <tr><td>02</td><td class="rad">26500-2024-00110</td><td class="resp">Dir. Bienes Raíces</td></tr>
+      <tr><td>03</td><td class="rad">1050001-2024-0318</td><td class="resp">Dir. Bienes Raíces</td></tr>
+      <tr><td>04</td><td class="rad">1471001-2024-0593</td><td class="resp">Dir. Bienes Raíces</td></tr>
+      <tr><td>05</td><td class="rad">15300-2024-1677</td><td class="resp">Dir. Bienes Raíces</td></tr>
+      <tr><td>06</td><td class="rad">15300-2024-1885</td><td class="resp">Dir. Bienes Raíces</td></tr>
+      <tr><td>07</td><td class="rad">1471001-2024-0362</td><td class="resp">Directores</td></tr>
+      <tr><td>08</td><td class="rad">2620001-2024-DIE-184</td><td class="resp">Directores</td></tr>
+      <tr><td>09</td><td class="rad">1180001-2024-0118</td><td class="resp">Directores</td></tr>
+      <tr><td>10</td><td class="rad">1050001-2024-380</td><td class="resp">Directores</td></tr>
+      <tr><td>11</td><td class="rad">2631001-2024-0106</td><td class="resp">Directores</td></tr>
+      <tr><td>12</td><td class="rad">1471001-2024-0541</td><td class="resp">Directores</td></tr>
+    </tbody>
+  </table></div>
+  <div class="vig-label" style="background:var(--y25-bg);color:var(--y25-tx)">▸ 2025 — 10 pendientes</div>
+  <div class="table-wrap"><table>
+    <thead><tr><th>#</th><th>Entrada / Radicado</th><th>Área responsable</th></tr></thead>
+    <tbody>
+      <tr><td>01</td><td class="rad">1330001-2025-0670</td><td class="resp">DBR</td></tr>
+      <tr><td>02</td><td class="rad">1050001-2025-0508</td><td class="resp">DBR</td></tr>
+      <tr><td>03</td><td class="rad">1471001-2025-0785</td><td class="resp">DBR</td></tr>
+      <tr><td>04</td><td class="rad">RECIBO DE CAJA 950004087</td><td class="resp">DBR</td></tr>
+      <tr><td>05</td><td class="rad">RESOLUCIÓN 0854</td><td class="resp">DBR</td></tr>
+      <tr><td>06</td><td class="rad">1471001-2025-0802</td><td class="resp">DBR</td></tr>
+      <tr><td>07</td><td class="rad">1360001-2025-583</td><td class="resp">Direcciones · Gerencia</td></tr>
+      <tr><td>08</td><td class="rad">1330001-2025-0627</td><td class="resp">Direcciones · Gerencia</td></tr>
+      <tr><td>09</td><td class="rad">1451001-2025-1690</td><td class="resp">Direcciones · Gerencia</td></tr>
+      <tr><td>10</td><td class="rad">1330001-2025-0689</td><td class="resp">Direcciones · Gerencia</td></tr>
+    </tbody>
+  </table></div>
+  <div class="vig-label" style="background:var(--y26-bg);color:var(--y26-tx)">▸ 2026 ene–feb — 12 pendientes</div>
+  <div class="table-wrap"><table>
+    <thead><tr><th>#</th><th>Entrada / Radicado</th><th>Área responsable</th></tr></thead>
+    <tbody>
+      <tr><td>01</td><td class="rad">E-2026-001324</td><td class="resp">DBR</td></tr>
+      <tr><td>02</td><td class="rad">3010001-2026-0057</td><td class="resp">DBR</td></tr>
+      <tr><td>03</td><td class="rad">2420001-2026-0178</td><td class="resp">DBR</td></tr>
+      <tr><td>04</td><td class="rad">241001-2026-0159</td><td class="resp">DBR</td></tr>
+      <tr><td>05</td><td class="rad">15300-2026-0316</td><td class="resp">DBR</td></tr>
+      <tr><td>06</td><td class="rad">15300-2026-24</td><td class="resp">DRM · DABA · DBR</td></tr>
+      <tr><td>07</td><td class="rad">1520001-2026-008</td><td class="resp">Direcciones</td></tr>
+      <tr><td>08</td><td class="rad">1050001-2026-0016</td><td class="resp">Direcciones</td></tr>
+      <tr><td>09</td><td class="rad">13700-2026-015</td><td class="resp">Direcciones · Gerencia</td></tr>
+      <tr><td>10</td><td class="rad">1451001-2026-0154</td><td class="resp">Direcciones · Gerencia</td></tr>
+      <tr><td>11</td><td class="rad">1190001-2026-0268</td><td class="resp">Direcciones · Gerencia</td></tr>
+      <tr><td>12</td><td class="rad">1330001-2026-083</td><td class="resp">Direcciones · Gerencia</td></tr>
+    </tbody>
+  </table></div>
+</div>
+
+<div class="footer">
+  MPFD0801F08-03 · Gerencia Corporativa Sistema Maestro · Corte: 30 de marzo de 2026<br>
+  Julie Andrea Fagua Sánchez &nbsp;·&nbsp; Mariana Dávila Marín — Contratistas GCSM
+</div>
+
+</body>
+</html>
