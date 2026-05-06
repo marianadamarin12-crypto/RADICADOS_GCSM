@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daniel Dávila · Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root{--bg:#0e0c0a;--surface:#171410;--card:#1e1a16;--border:#2c2620;--orange:#f97316;--green:#34d399;--red:#f87171;--blue:#60a5fa;--purple:#a78bfa;--text:#ede8e0;--muted:#6b6560;--r:14px;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);font-family:'Plus Jakarta Sans',sans-serif;color:var(--text);min-height:100vh;}
+
+.header{background:linear-gradient(135deg,#1e1208,#0e0c0a);border-bottom:1px solid var(--border);padding:20px 36px;display:flex;align-items:center;justify-content:space-between;}
+.header h1{font-size:21px;font-weight:800;letter-spacing:-.02em;}
+.header h1 span{color:var(--orange);}
+.header p{font-size:11px;color:var(--muted);margin-top:3px;letter-spacing:.06em;text-transform:uppercase;}
+.header-badge{background:rgba(249,115,22,.12);border:1px solid rgba(249,115,22,.25);color:var(--orange);font-size:12px;font-weight:700;padding:6px 18px;border-radius:20px;}
+
+.main{padding:26px 36px;max-width:1300px;margin:0 auto;}
+
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:13px;margin-bottom:26px;}
+.kcard{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:22px 22px 18px;position:relative;overflow:hidden;transition:transform .15s;cursor:default;}
+.kcard:hover{transform:translateY(-2px);}
+.kcard::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;border-radius:0 0 var(--r) var(--r);}
+.kcard.g::after{background:var(--green);}
+.kcard.r::after{background:var(--red);}
+.kcard.o::after{background:var(--orange);}
+.kcard.b::after{background:var(--blue);}
+.kcard.p::after{background:var(--purple);}
+.k-icon-wrap{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:14px;font-size:20px;}
+.kcard.g .k-icon-wrap{background:rgba(52,211,153,.12);color:var(--green);}
+.kcard.r .k-icon-wrap{background:rgba(248,113,113,.12);color:var(--red);}
+.kcard.o .k-icon-wrap{background:rgba(249,115,22,.12);color:var(--orange);}
+.kcard.b .k-icon-wrap{background:rgba(96,165,250,.12);color:var(--blue);}
+.kcard.p .k-icon-wrap{background:rgba(167,139,250,.12);color:var(--purple);}
+.k-label{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;}
+.k-value{font-size:26px;font-weight:800;line-height:1;letter-spacing:-.03em;}
+.kcard.g .k-value{color:var(--green);}
+.kcard.r .k-value{color:var(--red);}
+.kcard.o .k-value{color:var(--orange);}
+.kcard.b .k-value{color:var(--blue);}
+.kcard.p .k-value{color:var(--purple);}
+.k-sub{font-size:11px;color:var(--muted);margin-top:8px;}
+.k-trend{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;margin-top:6px;padding:2px 8px;border-radius:20px;}
+.k-trend.up{background:rgba(52,211,153,.12);color:var(--green);}
+.k-trend.down{background:rgba(248,113,113,.12);color:var(--red);}
+.ahorro-bar{margin-top:12px;}
+.ahorro-track{height:4px;background:rgba(167,139,250,.15);border-radius:2px;overflow:hidden;}
+.ahorro-fill{height:100%;background:var(--purple);border-radius:2px;}
+.ahorro-labels{display:flex;justify-content:space-between;font-size:10px;color:var(--muted);margin-top:4px;}
+
+.ext-wrap{background:var(--card);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;}
+.ext-head{padding:16px 22px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.ext-title{font-size:14px;font-weight:700;display:flex;align-items:center;gap:8px;}
+.ext-saldo{font-size:13px;color:var(--muted);}
+.ext-saldo strong{color:var(--green);font-size:15px;font-weight:800;}
+.th-row{display:grid;grid-template-columns:110px 1fr 100px 140px 150px;padding:9px 22px;background:var(--surface);border-bottom:1px solid var(--border);}
+.th{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);}
+.th.r{text-align:right;}
+.tr{display:grid;grid-template-columns:110px 1fr 100px 140px 150px;padding:13px 22px;border-bottom:1px solid rgba(255,255,255,.03);align-items:center;transition:background .12s;}
+.tr:hover{background:rgba(255,255,255,.025);}
+.td-fecha{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums;}
+.td-desc{font-size:13px;font-weight:500;padding-right:10px;}
+.pill{display:inline-flex;align-items:center;gap:3px;padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;}
+.pi{background:rgba(52,211,153,.12);color:var(--green);}
+.pe{background:rgba(248,113,113,.12);color:var(--red);}
+.td-val{font-size:13px;font-weight:700;font-variant-numeric:tabular-nums;text-align:right;}
+.td-val.ing{color:var(--green);}
+.td-val.egr{color:var(--red);}
+.td-sal{font-size:13px;font-weight:600;font-variant-numeric:tabular-nums;text-align:right;color:var(--text);}
+.tr-tot{display:grid;grid-template-columns:110px 1fr 100px 140px 150px;padding:14px 22px;background:rgba(249,115,22,.05);border-top:1px solid rgba(249,115,22,.18);align-items:center;}
+.tr-tot .td-fecha{font-weight:700;color:var(--orange);font-size:11px;letter-spacing:.06em;text-transform:uppercase;}
+.tr-tot .td-sal{color:var(--orange);font-size:14px;font-weight:800;}
+
+@media(max-width:900px){.th-row,.tr,.tr-tot{grid-template-columns:100px 1fr 90px 120px;}.th:last-child,.td-sal{display:none;}}
+@media(max-width:600px){.main{padding:16px;}.header{padding:16px;}.kpi-grid{grid-template-columns:1fr 1fr;}.k-value{font-size:20px;}.th-row,.tr,.tr-tot{grid-template-columns:85px 1fr 95px;}.th:nth-child(3),.td-tipo{display:none;}}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div>
+    <h1>Dashboard · <span>Daniel Dávila</span></h1>
+    <p>Movimientos financieros · Sep 2025 – May 2026</p>
+  </div>
+  <div class="header-badge">Saldo: $5.061.310</div>
+</div>
+
+<div class="main">
+  <div class="kpi-grid">
+    <div class="kcard g">
+      <div class="k-icon-wrap"><i class="ti ti-trending-up" aria-hidden="true"></i></div>
+      <div class="k-label">Ingresos</div>
+      <div class="k-value">$25.611.390</div>
+      <div class="k-sub">Total · 6 ingresos</div>
+    </div>
+    <div class="kcard r">
+      <div class="k-icon-wrap"><i class="ti ti-trending-down" aria-hidden="true"></i></div>
+      <div class="k-label">Egresos</div>
+      <div class="k-value">$20.550.080</div>
+      <div class="k-sub">Total · 13 egresos</div>
+    </div>
+    <div class="kcard o">
+      <div class="k-icon-wrap"><i class="ti ti-scale" aria-hidden="true"></i></div>
+      <div class="k-label">Saldo neto</div>
+      <div class="k-value">$5.061.310</div>
+      <div class="k-sub">A favor de Daniel</div>
+    </div>
+    <div class="kcard b">
+      <div class="k-icon-wrap"><i class="ti ti-receipt" aria-hidden="true"></i></div>
+      <div class="k-label">Movimientos</div>
+      <div class="k-value">19</div>
+      <div class="k-sub">En 7 meses activos</div>
+    </div>
+    <div class="kcard p">
+      <div class="k-icon-wrap"><i class="ti ti-piggy-bank" aria-hidden="true"></i></div>
+      <div class="k-label">Ahorro acumulado</div>
+      <div class="k-value">$5.061.310</div>
+      <div class="k-trend up"><i class="ti ti-arrow-up" style="font-size:12px"></i><span>+$46.300 vs mes ant.</span></div>
+      <div class="ahorro-bar">
+        <div class="ahorro-track"><div class="ahorro-fill" style="width:81%"></div></div>
+        <div class="ahorro-labels"><span>$0</span><span>Máx: $6.233.910</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ext-wrap">
+    <div class="ext-head">
+      <span class="ext-title">
+        <i class="ti ti-file-text" style="font-size:18px;color:var(--orange)" aria-hidden="true"></i>
+        Extracto diario · Daniel Dávila · 19 registros
+      </span>
+      <span class="ext-saldo">Saldo actual: <strong>$5.061.310</strong></span>
+    </div>
+    <div class="th-row">
+      <div class="th">Fecha</div>
+      <div class="th">Descripción</div>
+      <div class="th">Tipo</div>
+      <div class="th r">Valor</div>
+      <div class="th r">Saldo corriente</div>
+    </div>
+    <div>
+      <div class="tr"><div class="td-fecha">04/09/2025</div><div class="td-desc">Ingreso Jhon Aguacates</div><div class="td-tipo"><span class="pill pi"><i class="ti ti-arrow-up" style="font-size:10px"></i>ING</span></div><div class="td-val ing">+$20.000.000</div><div class="td-sal">$20.000.000</div></div>
+      <div class="tr"><div class="td-fecha">08/09/2025</div><div class="td-desc">Egreso, Daniel Dávila</div><div class="td-tipo"><span class="pill pe"><i class="ti ti-arrow-down" style="font-size:10px"></i>EGR</span></div><div class="td-val egr">-$14.532.536</div><div class="td-sal">$5.467.464</div></div>
+      <div class="tr"><div class="td-fecha">13/09/2025</div><div class="td-desc">Egreso, Daniel</div><div class="td-tipo"><span class="pill pe"><i class="ti ti-arrow-down" style="font-size:10px"></i>EGR</span></div><div class="td-val egr">-$140.000</div><div class="td-sal">$5.327.464</div></div>
+      <div class="tr"><div class="td-fecha">04/10/2025</div><div class="td-desc">Egreso, Daniel arriendo</div><div class="td-tipo"><span class="pill pe"><i class="ti ti-arrow-down" style="font-size:10px"></i>EGR</span></div><div class="td-val egr">-$1.000.000</div><div class="td-sal">$4.327.464</div></div>
+      <div class="tr"><div class="td-fecha">04/10/2025</div><div class="td-desc">Egreso, Daniel paga Mariana mercado</div><div class="td-tipo"><span class="pill pe"><i class="ti ti-arrow-down" style="font-size:10px"></i>EGR</span></div><div class="td-val egr">-$472.174</div><div class="td-sal">$3.855.290</div></div>
+      <div class="tr"><div class="td-fecha">08/10/2025</div><div class="td-desc">Egreso, Saldo Daniel planilla</div><div class="td-tipo"><span class="pill pe"><i class="ti ti-arrow-down" style="font-size:10px"></i>EGR</span></div><div class="td-val egr">-$421.900</div><div class="td-sal">$3.433.390</div></div>
+      <div class="tr"><div class="td-fecha">26/10/2025</div><div class="td-desc">Egreso, Daniel</div><div class="td-tipo"><span class="pill pe"><i class="ti ti-arrow-down" style="font-size:10px"></i>EGR</span></div><div class="td-val egr">-$132.370</div><div class="td-sal">$3.301.020</div></div>
+      <div class="tr"><div class="td-fecha">26/10/2025</div><div class="td-desc">Egreso, Daniel</div><div class="td-tipo"><span class="pill pe"><i class="ti ti-arrow-down" style="font-size:10px"></i>EGR</span></div><div class="td-val egr">-$101.310</div><div class="td-sal">$3.199.710</div></div>
+      <div class="tr"><div class="td-fecha">29/10/2025</div><div class="td-desc">Egreso, Daniel</div><div class="td-tipo"><span class="pill pe"><i class="ti ti-arrow-down" style="font-size:10px"></i>EGR</span></div><div class="td-val egr">-$167.190</div><div class="td-sal">$3.032.520</div></div>
+      <div class="tr"><div class="td-fecha">19/11/2025</div><div class="td-desc">Egreso, Daniel chapa puerta</div><div class="td-tipo"><span class="pill pe"><i class="ti ti-arrow-down" style="font-size:10px"></i>EGR</span></div><div class="td-val egr">-$55.000</div><div class="td-sal">$2.977.520</div></div>
+      <div class="tr"><div class="td-fecha">06/12/2025</div><div class="td-desc">Egreso, Daniel</div><div class="td-tipo"><span class="pill pe"><i class="ti ti-arrow-down" style="font-size:10px"></i>EGR</span></div><div class="td-val egr">-$1.355.000</div><div class="td-sal">$1.622.520</div></div>
+      <div class="tr"><div class="td-fecha">07/12/2025</div><div class="td-desc">Ingreso, Daniel</div><div class="td-tipo"><span class="pill pi"><i class="ti ti-arrow-up" style="font-size:10px"></i>ING</span></div><div class="td-val ing">+$2.000.000</div><div class="td-sal">$3.622.520</div></div>
+      <div class="tr"><div class="td-fecha">13/03/2026</div><div class="td-desc">Ingreso Daniel (efectivo)</div><div class="td-tipo"><span class="pill pi"><i class="ti ti-arrow-up" style="font-size:10px"></i>ING</span></div><div class="td-val ing">+$411.390</div><div class="td-sal">$4.033.910</div></div>
+      <div class="tr"><div class="td-fecha">13/03/2026</div><div class="td-desc">Ingreso Daniel (efectivo)</div><div class="td-tipo"><span class="pill pi"><i class="ti ti-arrow-up" style="font-size:10px"></i>ING</span></div><div class="td-val ing">+$800.000</div><div class="td-sal">$4.833.910</div></div>
+      <div class="tr"><div class="td-fecha">31/03/2026</div><div class="td-desc">Ingreso Daniel</div><div class="td-tipo"><span class="pill pi"><i class="ti ti-arrow-up" style="font-size:10px"></i>ING</span></div><div class="td-val ing">+$1.400.000</div><div class="td-sal">$6.233.910</div></div>
+      <div class="tr"><div class="td-fecha">15/04/2026</div><div class="td-desc">Egreso Daniel planilla abril</div><div class="td-tipo"><span class="pill pe"><i class="ti ti-arrow-down" style="font-size:10px"></i>EGR</span></div><div class="td-val egr">-$518.900</div><div class="td-sal">$5.715.010</div></div>
+      <div class="tr"><div class="td-fecha">15/04/2026</div><div class="td-desc">Egreso, envío tía Dora</div><div class="td-tipo"><span class="pill pe"><i class="ti ti-arrow-down" style="font-size:10px"></i>EGR</span></div><div class="td-val egr">-$700.000</div><div class="td-sal">$5.015.010</div></div>
+      <div class="tr"><div class="td-fecha">03/05/2026</div><div class="td-desc">Egreso, Pago Mariana mercado</div><div class="td-tipo"><span class="pill pe"><i class="ti ti-arrow-down" style="font-size:10px"></i>EGR</span></div><div class="td-val egr">-$953.700</div><div class="td-sal">$4.061.310</div></div>
+      <div class="tr"><div class="td-fecha">05/05/2026</div><div class="td-desc">Ingreso Daniel</div><div class="td-tipo"><span class="pill pi"><i class="ti ti-arrow-up" style="font-size:10px"></i>ING</span></div><div class="td-val ing">+$1.000.000</div><div class="td-sal">$5.061.310</div></div>
+      <div class="tr-tot">
+        <div class="td-fecha">TOTAL</div>
+        <div class="td-desc" style="font-size:11px;color:var(--muted);">19 movimientos · 6 ingresos · 13 egresos</div>
+        <div></div>
+        <div class="td-val" style="display:flex;flex-direction:column;align-items:flex-end;gap:2px;">
+          <span style="color:var(--green);font-size:12px;">+$25.611.390</span>
+          <span style="color:var(--red);font-size:12px;">-$20.550.080</span>
+        </div>
+        <div class="td-sal">$5.061.310</div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
